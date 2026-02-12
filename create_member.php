@@ -46,41 +46,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 include 'includes/header.php';
 ?>
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php" class="text-primary text-decoration-none">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="manage_team.php" class="text-primary text-decoration-none">Manage Team</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create Member</li>
-            </ol>
-        </nav>
+<div class="flex justify-center">
+    <div class="w-full max-w-2xl">
+        <div class="text-sm breadcrumbs mb-6">
+            <ul>
+                <li><a href="dashboard.php" class="text-primary font-medium">Dashboard</a></li>
+                <li><a href="manage_team.php" class="text-primary font-medium">Manage Team</a></li>
+                <li>Create Member</li>
+            </ul>
+        </div>
         
-        <div class="card shadow p-4">
-            <div class="mb-4">
-                <h2 class="fw-bold">Create Team Member</h2>
-                <p class="text-secondary">Register a new member for your team. They will be linked to your admin account.</p>
+        <div class="card bg-base-100 shadow-2xl p-8 border border-base-300">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black">Create Team Member</h2>
+                <p class="text-base-content/60">Register a new member for your team. They will be linked to your admin account.</p>
             </div>
 
             <?php if ($message): ?>
-                <div class="alert alert-<?php echo $messageType; ?> alert-dismissible fade show" role="alert">
-                    <?php echo $message; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert <?php echo $messageType === 'danger' ? 'alert-error' : 'alert-success'; ?> shadow-sm mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span><?php echo $message; ?></span>
                 </div>
             <?php endif; ?>
 
-            <form action="create_member.php" method="POST">
-                <div class="mb-3">
-                    <label for="username" class="form-label">Member Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+            <form action="create_member.php" method="POST" class="space-y-6">
+                <div class="form-control">
+                    <label class="label"><span class="label-text font-bold">Member Username</span></label>
+                    <input type="text" name="username" class="input input-bordered w-full" placeholder="Enter username" required />
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Temporary Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                <div class="form-control">
+                    <label class="label"><span class="label-text font-bold">Temporary Password</span></label>
+                    <input type="password" name="password" class="input input-bordered w-full" placeholder="Enter password" required />
                 </div>
-                <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary">Create Member</button>
-                    <a href="manage_team.php" class="btn btn-outline-secondary">Back to Team Management</a>
+                <div class="flex flex-col gap-4 mt-8">
+                    <button type="submit" class="btn btn-primary w-full shadow-lg font-black">Create Member</button>
+                    <a href="manage_team.php" class="btn btn-ghost w-full">Back to Team Management</a>
                 </div>
             </form>
         </div>

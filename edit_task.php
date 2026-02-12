@@ -93,83 +93,87 @@ $stmt = $pdo->query("SELECT id, username FROM users ORDER BY username ASC");
 $users = $stmt->fetchAll();
 ?>
 
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php" class="text-decoration-none">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="view_project.php?id=<?php echo $project_id; ?>" class="text-decoration-none">Project</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Task</li>
-            </ol>
-        </nav>
+<div class="flex justify-center">
+    <div class="w-full max-w-4xl">
+        <div class="text-sm breadcrumbs mb-6">
+            <ul>
+                <li><a href="dashboard.php" class="text-primary font-medium">Dashboard</a></li>
+                <li><a href="view_project.php?id=<?php echo $project_id; ?>" class="text-primary font-medium">Project</a></li>
+                <li>Edit Task</li>
+            </ul>
+        </div>
         
-        <div class="card shadow p-4">
-            <div class="mb-4">
-                <h2 class="fw-bold">Edit Task</h2>
-                <p class="text-secondary">Update task details and assignments.</p>
+        <div class="card bg-base-100 shadow-2xl p-8 border border-base-300">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black">Edit Task</h2>
+                <p class="text-base-content/60">Update task details and assignments.</p>
             </div>
 
             <?php if ($message): ?>
-                <div class="alert alert-<?php echo $messageType; ?> alert-dismissible fade show" role="alert">
-                    <?php echo $message; ?>
-                    <?php if ($messageType === 'success'): ?>
-                        <a href="view_project.php?id=<?php echo $project_id; ?>" class="alert-link">Return to Project Dashboard</a>
-                    <?php endif; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert <?php echo $messageType === 'danger' ? 'alert-error' : 'alert-success'; ?> shadow-sm mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div>
+                        <span><?php echo $message; ?></span>
+                        <?php if ($messageType === 'success'): ?>
+                            <div class="mt-2"><a href="view_project.php?id=<?php echo $project_id; ?>" class="link font-bold">Return to Project Dashboard</a></div>
+                        <?php endif; ?>
+                    </div>
                 </div>
             <?php endif; ?>
 
-            <form action="edit_task.php?id=<?php echo $task_id; ?>" method="POST">
-                <div class="mb-3">
-                    <label for="title" class="form-label">Task Title <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="title" name="title" value="<?php echo htmlspecialchars($task['title']); ?>" required>
+            <form action="edit_task.php?id=<?php echo $task_id; ?>" method="POST" class="space-y-6">
+                <div class="form-control">
+                    <label class="label"><span class="label-text font-bold">Task Title <span class="text-error">*</span></span></label>
+                    <input type="text" name="title" class="input input-bordered w-full" value="<?php echo htmlspecialchars($task['title']); ?>" required />
                 </div>
                 
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="3"><?php echo htmlspecialchars($task['description']); ?></textarea>
+                <div class="form-control">
+                    <label class="label"><span class="label-text font-bold">Description</span></label>
+                    <textarea name="description" class="textarea textarea-bordered h-24"><?php echo htmlspecialchars($task['description']); ?></textarea>
                 </div>
                 
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <select class="form-select" id="status" name="status">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="form-control">
+                        <label class="label"><span class="label-text font-bold">Status</span></label>
+                        <select name="status" class="select select-bordered w-full">
                             <option value="todo" <?php echo $task['status'] === 'todo' ? 'selected' : ''; ?>>To Do</option>
                             <option value="in_progress" <?php echo $task['status'] === 'in_progress' ? 'selected' : ''; ?>>In Progress</option>
                             <option value="review" <?php echo $task['status'] === 'review' ? 'selected' : ''; ?>>Review</option>
                             <option value="done" <?php echo $task['status'] === 'done' ? 'selected' : ''; ?>>Done</option>
                         </select>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="priority" class="form-label">Priority</label>
-                        <select class="form-select" id="priority" name="priority">
+                    <div class="form-control">
+                        <label class="label"><span class="label-text font-bold">Priority</span></label>
+                        <select name="priority" class="select select-bordered w-full">
                             <option value="low" <?php echo $task['priority'] === 'low' ? 'selected' : ''; ?>>Low</option>
                             <option value="medium" <?php echo $task['priority'] === 'medium' ? 'selected' : ''; ?>>Medium</option>
                             <option value="high" <?php echo $task['priority'] === 'high' ? 'selected' : ''; ?>>High</option>
                             <option value="critical" <?php echo $task['priority'] === 'critical' ? 'selected' : ''; ?>>Critical</option>
                         </select>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="due_date" class="form-label">Due Date</label>
-                        <input type="date" class="form-control" id="due_date" name="due_date" value="<?php echo $task['due_date']; ?>">
+                    <div class="form-control">
+                        <label class="label"><span class="label-text font-bold">Due Date</span></label>
+                        <input type="date" name="due_date" class="input input-bordered w-full" value="<?php echo $task['due_date']; ?>" />
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="assignees" class="form-label">Assign Members</label>
-                    <select class="form-select" id="assignees" name="assignees[]" multiple size="4">
+                <div class="form-control">
+                    <label class="label"><span class="label-text font-bold">Assign Members</span></label>
+                    <select name="assignees[]" multiple class="select select-bordered h-32">
                         <?php foreach ($users as $user): ?>
                             <option value="<?php echo $user['id']; ?>" <?php echo in_array($user['id'], $current_assignees) ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($user['username']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <div class="form-text">Hold Ctrl/Cmd to select multiple members.</div>
+                    <label class="label">
+                        <span class="label-text-alt opacity-60">Hold Ctrl/Cmd to select multiple members</span>
+                    </label>
                 </div>
 
-                <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary">Update Task</button>
-                    <a href="view_project.php?id=<?php echo $project_id; ?>" class="btn btn-outline-secondary">Cancel</a>
+                <div class="flex gap-4 mt-8">
+                    <button type="submit" class="btn btn-primary flex-1 shadow-lg font-black">Update Task</button>
+                    <a href="view_project.php?id=<?php echo $project_id; ?>" class="btn btn-ghost flex-1">Cancel</a>
                 </div>
             </form>
         </div>

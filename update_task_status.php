@@ -54,34 +54,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php" class="text-decoration-none">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="view_project.php?id=<?php echo $task['project_id']; ?>" class="text-decoration-none">Project</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Update Status</li>
-            </ol>
-        </nav>
+<div class="flex justify-center">
+    <div class="w-full max-w-2xl">
+        <div class="text-sm breadcrumbs mb-6">
+            <ul>
+                <li><a href="dashboard.php" class="text-primary font-medium">Dashboard</a></li>
+                <li><a href="view_project.php?id=<?php echo $task['project_id']; ?>" class="text-primary font-medium">Project</a></li>
+                <li>Update Status</li>
+            </ul>
+        </div>
         
-        <div class="card shadow p-4">
-            <h3 class="fw-bold mb-3">Update Task Status</h3>
-            <p class="lead"><?php echo htmlspecialchars($task['title']); ?></p>
-            
+        <div class="card bg-base-100 shadow-2xl p-8 border border-base-300">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black">Update Task Status</h2>
+                <p class="text-xl opacity-60 mt-2 font-medium"><?php echo htmlspecialchars($task['title']); ?></p>
+            </div>
+
             <?php if ($message): ?>
-                <div class="alert alert-<?php echo $messageType; ?> alert-dismissible fade show" role="alert">
-                    <?php echo $message; ?>
-                    <?php if ($messageType === 'success'): ?>
-                        <a href="view_project.php?id=<?php echo $task['project_id']; ?>" class="alert-link">Return to Project</a>
-                    <?php endif; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert <?php echo $messageType === 'danger' ? 'alert-error' : 'alert-success'; ?> shadow-sm mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div>
+                        <span><?php echo $message; ?></span>
+                        <?php if ($messageType === 'success'): ?>
+                            <div class="mt-2"><a href="view_project.php?id=<?php echo $task['project_id']; ?>" class="link font-bold">Return to Project</a></div>
+                        <?php endif; ?>
+                    </div>
                 </div>
             <?php endif; ?>
 
-            <form method="POST">
-                <div class="mb-3">
-                    <label for="status" class="form-label">Current Status</label>
-                    <select class="form-select" id="status" name="status">
+            <form method="POST" class="space-y-6">
+                <div class="form-control">
+                    <label class="label"><span class="label-text font-bold">New Status</span></label>
+                    <select name="status" class="select select-bordered w-full text-lg">
                         <option value="todo" <?php echo $task['status'] === 'todo' ? 'selected' : ''; ?>>To Do</option>
                         <option value="in_progress" <?php echo $task['status'] === 'in_progress' ? 'selected' : ''; ?>>In Progress</option>
                         <option value="review" <?php echo $task['status'] === 'review' ? 'selected' : ''; ?>>Review</option>
@@ -89,9 +93,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </select>
                 </div>
                 
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">Update Status</button>
-                    <a href="view_project.php?id=<?php echo $task['project_id']; ?>" class="btn btn-outline-secondary">Cancel</a>
+                <div class="flex flex-col gap-4 mt-8">
+                    <button type="submit" class="btn btn-primary w-full shadow-lg font-black">Update Status</button>
+                    <a href="view_project.php?id=<?php echo $task['project_id']; ?>" class="btn btn-ghost w-full">Cancel</a>
                 </div>
             </form>
         </div>

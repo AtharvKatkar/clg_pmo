@@ -40,41 +40,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 include 'includes/header.php';
 ?>
 
-<div class="row justify-content-center mt-5">
-    <div class="col-md-5">
-        <div class="card shadow p-4">
-            <div class="text-center mb-4">
-                <i class="bi bi-person-plus-fill text-primary display-4"></i>
-                <h2 class="mt-2 fw-bold">Admin Sign Up</h2>
-                <p class="text-secondary">Create your admin account to manage your team</p>
+<div class="flex justify-center items-center min-h-[80vh]">
+    <div class="w-full max-w-lg">
+        <div class="card bg-base-100 shadow-2xl p-8 border border-base-300">
+            <div class="text-center mb-8">
+                <i class="bi bi-person-plus-fill text-primary text-5xl"></i>
+                <h2 class="mt-4 text-3xl font-black">Admin Sign Up</h2>
+                <p class="text-base-content/60">Create your admin account to manage your team</p>
             </div>
 
             <?php if ($message): ?>
-                <div class="alert alert-<?php echo $messageType; ?> alert-dismissible fade show" role="alert">
-                    <?php echo $message; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert <?php echo $messageType === 'danger' ? 'alert-error' : 'alert-success'; ?> shadow-sm mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span><?php echo $message; ?></span>
                 </div>
             <?php endif; ?>
 
-            <form action="register.php" method="POST">
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+            <form action="register.php" method="POST" class="space-y-4">
+                <div class="form-control">
+                    <label class="label"><span class="label-text font-bold">Username</span></label>
+                    <input type="text" name="username" class="input input-bordered w-full" required />
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                <div class="form-control">
+                    <label class="label"><span class="label-text font-bold">Password</span></label>
+                    <input type="password" name="password" class="input input-bordered w-full" required />
                 </div>
-                <div class="mb-3">
-                    <label for="confirm_password" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                <div class="form-control">
+                    <label class="label"><span class="label-text font-bold">Confirm Password</span></label>
+                    <input type="password" name="confirm_password" class="input input-bordered w-full" required />
                 </div>
-                <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary">Register as Admin</button>
-                </div>
+                <button type="submit" class="btn btn-primary w-full mt-6 shadow-lg">Register as Admin</button>
             </form>
-            <div class="mt-4 text-center">
-                <p class="text-secondary">Already have an account? <a href="login.php" class="text-primary text-decoration-none">Login</a></p>
+            
+            <div class="mt-8 text-center border-t border-base-200 pt-6">
+                <p class="text-sm opacity-70">Already have an account? <a href="login.php" class="link link-primary font-bold">Login</a></p>
             </div>
         </div>
     </div>

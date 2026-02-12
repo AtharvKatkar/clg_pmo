@@ -10,17 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Bootstrap Icons (still useful for icons) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#570df8',
-                    }
-                }
-            }
-        }
-    </script>
+
 </head>
 <body class="bg-base-200 min-h-screen">
 <?php 
@@ -29,6 +19,7 @@ if (session_status() === PHP_SESSION_NONE) {
 } 
 ?>
 
+<?php if (!isset($hide_navbar) || !$hide_navbar): ?>
 <div class="navbar bg-primary text-primary-content shadow-lg mb-8">
     <div class="container mx-auto">
         <div class="flex-1">
@@ -72,5 +63,8 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 </div>
+<?php endif; ?>
 
+<?php if (!isset($full_width_layout) || !$full_width_layout): ?>
 <div class="container mx-auto px-4 pb-12">
+<?php endif; ?>
